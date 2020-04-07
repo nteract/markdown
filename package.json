@@ -1,0 +1,50 @@
+{
+  "name": "@nteract/markdown",
+  "version": "4.3.11",
+  "description": "Markdown/MathJax renderer for nteract",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "nteractDesktop": "src/index.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "test": "jest"
+  },
+  "repository": "https://github.com/nteract/nteract/tree/master/packages/markdown",
+  "keywords": [
+    "markdown",
+    "mathjax"
+  ],
+  "author": "Trevor Lyon <github.com/tlyon3>",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "@nteract/mathjax": "^4.0.7",
+    "@nteract/presentational-components": "^3.3.11",
+    "react-markdown": "^4.0.0"
+  },
+  "peerDependencies": {
+    "react": "^16.11.0",
+    "react-dom": "^16.3.2"
+  },
+  "devDependencies": {
+    "@nteract/commutable": "^7.2.9",
+    "@types/enzyme": "^3.10.5",
+    "@types/jest": "^25.1.4",
+    "@types/react": "^16.9.23",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "enzyme-to-json": "^3.4.4",
+    "jest": "^25.1.0",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "remark-parse": "^8.0.0",
+    "remark-stringify": "^8.0.0",
+    "styled-components": "^5.0.1",
+    "ts-jest": "^25.2.1",
+    "typescript": "^3.8.3",
+    "unified": "^9.0.0",
+    "unist-builder": "^2.0.3"
+  }
+}

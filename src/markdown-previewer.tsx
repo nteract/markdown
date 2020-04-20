@@ -8,6 +8,7 @@ import {
 } from "@nteract/presentational-components";
 import React from "react";
 import Markdown from "./markdown-render";
+import { ReactMarkdownProps } from "react-markdown";
 
 interface Props {
   source: string;
@@ -18,6 +19,7 @@ interface Props {
   cellFocused: boolean;
   editorFocused: boolean;
   children: React.ReactNode;
+  markdownOptions?: ReactMarkdownProps;
 }
 
 interface State {
@@ -154,6 +156,7 @@ export class MarkdownPreviewer extends React.Component<Props, State> {
       >
         <Outputs>
           <Markdown
+            {...this.props.markdownOptions}
             source={
               source
                 ? source
@@ -171,6 +174,7 @@ export class MarkdownPreviewer extends React.Component<Props, State> {
         </Input>
         <Outputs hidden={source === ""}>
           <Markdown
+            {...this.props.markdownOptions}
             source={
               source
                 ? source

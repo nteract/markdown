@@ -1,6 +1,9 @@
 import * as React from "react";
 import { mount } from "enzyme";
-import Markdown from "../src";
+
+import { toAttachments } from "../src/attachment/attachment";
+import { Attachments } from "../src/attachment/attachment-transformer";
+import MarkdownRender from "../src";
 
 function buildSource(attachment?: string): string {
   return `
@@ -16,60 +19,45 @@ function buildSource(attachment?: string): string {
 `;
 }
 
-const defaultAttachment = "![image.png](attachment:spot-the-difference-2a.jpg)";
+const inlineAttachment = "![image.png](attachment:spot-the-difference-2a.jpg)";
 
-describe("cell attachments", () => {
-  test("it should render attachment data inline when attachments are provided and a valid attachment reference is in the source", () => {
-    const attachments = {
-      "spot-the-difference-2a.jpg": {
-        "image/jpeg": "somecontent",
-      },
-      "someotherimage.png": {
-        "image/png": "someothercontent",
-      },
-    };
-    const wrapper = mount(
-      <Markdown
-        source={buildSource(defaultAttachment)}
-        attachments={attachments}
-      />
-    );
-    expect(
-      wrapper.contains(
-        <img alt="image.png" src="data:image/jpeg;base64,somecontent" />
-      )
-    );
+const cellAttachments = {
+  "spot-the-difference-2a.jpg": {
+    "image/jpeg":
+      "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4",
+  },
+  "someotherimage.png": {
+    "image/png": "someothercontent",
+  },
+};
+
+const attchmnts: Attachments = toAttachments(cellAttachments);
+
+//uses value 'mocked' defined in test-setup.js for return of URL.createObjectURL. Jest can't execute logic that uses this method.
+describe("attachment", () => {
+  test("toAttachments properly converts jupyter nb format cell attachments to markdown AST based attachments", () => {
+    expect(attchmnts["spot-the-difference-2a.jpg"]).toEqual("mocked");
+    expect(attchmnts["someotherimage.png"]).toEqual("mocked");
   });
 
-  test("it should have no effect on source when no attachments are provided and source contains an attachment reference", () => {
-    const wrapper = mount(<Markdown source={buildSource(defaultAttachment)} />);
-    expect(
-      wrapper.contains(
-        <img alt="image.png" src="attachment:spot-the-difference-2a.jpg" />
-      )
+  test("Attachments should be added to source if there is matching reference", () => {
+    const wrapped = mount(
+      <MarkdownRender
+        source={buildSource(inlineAttachment)}
+        attachments={attchmnts}
+      ></MarkdownRender>
     );
+    const imgProps = wrapped.find("img").props();
+    expect(imgProps).toHaveProperty("src", "mocked");
   });
 
-  test("it should have no effect on source when attachments are provided and source has no attachment reference", () => {
-    const attachment = {
-      throwAway: {
-        "image/png": "theImageContent",
-      },
-    };
-    mount(<Markdown source={buildSource()} attachments={attachment} />);
-  });
-
-  test("it should have no effect on source when attachments are provided and source has an attachment reference that is not in attachments object", () => {
-    const attachment = {
-      throwAway: {
-        "image/png": "theImageContent",
-      },
-    };
-    mount(
-      <Markdown
-        source={buildSource(defaultAttachment)}
-        attachments={attachment}
-      />
+  test("Images should be unaffected if they are not juptyer attachments", () => {
+    const wrapped = mount(
+      <MarkdownRender
+        source={buildSource("(![img](bogus.jpg)")}
+      ></MarkdownRender>
     );
+    const imgProps = wrapped.find("img").props();
+    expect(imgProps).toHaveProperty("src", "bogus.jpg");
   });
 });

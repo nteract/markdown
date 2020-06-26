@@ -5,11 +5,11 @@ import ReactMarkdown from "react-markdown";
 
 import RemarkMathPlugin from "./remark-math";
 import AttachmentTransformer, {
-  CellAttachments,
+  Attachments,
 } from "./attachment/attachment-transformer";
 
 interface MarkDownRenderProps extends ReactMarkdown.ReactMarkdownProps {
-  attachments?: CellAttachments;
+  attachments?: Attachments;
 }
 
 const math = (props: { value: string }): React.ReactElement<unknown> => (

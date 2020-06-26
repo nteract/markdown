@@ -25,7 +25,7 @@ export function toAttachments(cellAttachments: CellAttachments): Attachments {
 }
 
 /**
- * Converts content a blob url and returns an attachment with the name as the key
+ * Converts content to a blob url and returns an attachment with the attachmentName as the key
  * @param attachmentName The name of the attachment
  * @param mediaType The media type of the content
  * @param content The original content

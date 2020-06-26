@@ -1,8 +1,6 @@
 import * as React from "react";
 import { mount } from "enzyme";
 
-import { toAttachments } from "../src/attachment/attachment";
-import { Attachments } from "../src/attachment/attachment-transformer";
 import MarkdownRender from "../src";
 
 function buildSource(attachment?: string): string {
@@ -19,42 +17,56 @@ function buildSource(attachment?: string): string {
 `;
 }
 
-const inlineAttachment = "![image.png](attachment:spot-the-difference-2a.jpg)";
-
 const cellAttachments = {
-  "spot-the-difference-2a.jpg": {
-    "image/jpeg":
-      "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4",
-  },
-  "someotherimage.png": {
-    "image/png": "someothercontent",
-  },
+  "spot-the-difference-2a.jpg":
+    "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4",
+  "someotherimage.png": "data:image/png;base64,someothercontent",
 };
 
-const attchmnts: Attachments = toAttachments(cellAttachments);
+const inlineAttachment = "![image.png](attachment:spot-the-difference-2a.jpg)";
 
-//uses value 'mocked' defined in test-setup.js for return of URL.createObjectURL. Jest can't execute logic that uses this method.
 describe("attachment", () => {
-  test("toAttachments properly converts jupyter nb format cell attachments to markdown AST based attachments", () => {
-    expect(attchmnts["spot-the-difference-2a.jpg"]).toEqual("mocked");
-    expect(attchmnts["someotherimage.png"]).toEqual("mocked");
-  });
-
-  test("Attachments should be added to source if there is matching reference", () => {
+  test("Attachment should be added to source if the source contains a valid jupyter attachment reference", () => {
     const wrapped = mount(
       <MarkdownRender
         source={buildSource(inlineAttachment)}
-        attachments={attchmnts}
+        attachments={cellAttachments}
       ></MarkdownRender>
     );
     const imgProps = wrapped.find("img").props();
-    expect(imgProps).toHaveProperty("src", "mocked");
+    expect(imgProps).toHaveProperty(
+      "src",
+      "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4"
+    );
   });
 
-  test("Images should be unaffected if they are not juptyer attachments", () => {
+  test("Source is unaffected when it contains jupyter attachment reference and cell attachments is not provided", () => {
+    const wrapped = mount(
+      <MarkdownRender source={buildSource(inlineAttachment)}></MarkdownRender>
+    );
+    const imgProps = wrapped.find("img").props();
+    expect(imgProps).toHaveProperty(
+      "src",
+      "attachment:spot-the-difference-2a.jpg"
+    );
+  });
+
+  test("Source is unaffected when empty attachment is provided", () => {
     const wrapped = mount(
       <MarkdownRender
-        source={buildSource("(![img](bogus.jpg)")}
+        source={buildSource("(![someimg](bogus.jpg)")}
+        attachments={{}}
+      ></MarkdownRender>
+    );
+    const imgProps = wrapped.find("img").props();
+    expect(imgProps).toHaveProperty("src", "bogus.jpg");
+  });
+
+  test("Source is unaffected when it contains no jupyter attachment reference and cell attachments are provided", () => {
+    const wrapped = mount(
+      <MarkdownRender
+        source={buildSource("(![someimg](bogus.jpg)")}
+        attachments={cellAttachments}
       ></MarkdownRender>
     );
     const imgProps = wrapped.find("img").props();

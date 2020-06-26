@@ -62,6 +62,20 @@ describe("attachment", () => {
     expect(imgProps).toHaveProperty("src", "bogus.jpg");
   });
 
+  test("Source is unaffected when it contains jupyter attachment reference and empty attachment is provided", () => {
+    const wrapped = mount(
+      <MarkdownRender
+        source={buildSource(inlineAttachment)}
+        attachments={{}}
+      ></MarkdownRender>
+    );
+    const imgProps = wrapped.find("img").props();
+    expect(imgProps).toHaveProperty(
+      "src",
+      "attachment:spot-the-difference-2a.jpg"
+    );
+  });
+
   test("Source is unaffected when it contains no jupyter attachment reference and cell attachments are provided", () => {
     const wrapped = mount(
       <MarkdownRender

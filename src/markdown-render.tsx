@@ -4,6 +4,13 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 
 import RemarkMathPlugin from "./remark-math";
+import AttachmentTransformer, {
+  Attachments,
+} from "./attachment/attachment-transformer";
+
+interface MarkDownRenderProps extends ReactMarkdown.ReactMarkdownProps {
+  attachments?: Attachments;
+}
 
 const math = (props: { value: string }): React.ReactElement<unknown> => (
   <MathJax.Node>{props.value}</MathJax.Node>
@@ -20,7 +27,7 @@ const code = (props: {
   <Source language={props.language}>{props.value}</Source>
 );
 
-const MarkdownRender = (props: ReactMarkdown.ReactMarkdownProps) => {
+const MarkdownRender = (props: MarkDownRenderProps) => {
   const newProps: ReactMarkdown.ReactMarkdownProps = {
     // https://github.com/rexxars/react-markdown#options
     ...props,
@@ -30,11 +37,11 @@ const MarkdownRender = (props: ReactMarkdown.ReactMarkdownProps) => {
       code,
       inlineMath,
       math,
-      ...props.renderers
+      ...props.renderers,
     },
-    plugins: [RemarkMathPlugin]
+    plugins: [RemarkMathPlugin],
+    astPlugins: [AttachmentTransformer(props.attachments)],
   };
-
   return <ReactMarkdown {...newProps} />;
 };
 

@@ -20,7 +20,7 @@
   "author": "Trevor Lyon <github.com/tlyon3>",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "@nteract/mathjax": "^4.0.7",
+    "@nteract/mathjax": "^4.0.11",
     "@nteract/presentational-components": "^3.3.11",
     "react-markdown": "^4.0.0"
   },

@@ -32,7 +32,6 @@ const MarkdownRender = (props: MarkDownRenderProps) => {
     // https://github.com/rexxars/react-markdown#options
     ...props,
     className: `markdown-body ${props.className ?? ""}`,
-    escapeHtml: false,
     renderers: {
       code,
       inlineMath,

@@ -1,10 +1,12 @@
 {
   "name": "@nteract/markdown",
-  "version": "4.5.2",
+  "version": "4.6.0",
   "description": "Markdown/MathJax renderer for nteract",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "nteractDesktop": "src/index.ts",
   "publishConfig": {
     "access": "public"

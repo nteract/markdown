@@ -4,6 +4,7 @@
   "description": "Markdown/MathJax renderer for nteract",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "files": ["lib"],
   "nteractDesktop": "src/index.ts",
   "publishConfig": {
     "access": "public"

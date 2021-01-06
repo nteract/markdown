@@ -20,9 +20,13 @@ height between texels.
 "
 >
   <ReactMarkdown
-    astPlugins={Array []}
+    astPlugins={
+      Array [
+        [Function],
+      ]
+    }
     className="markdown-body "
-    escapeHtml={false}
+    escapeHtml={true}
     parserOptions={Object {}}
     plugins={
       Array [
@@ -159,7 +163,7 @@ dry layer
                 onError={[Function]}
                 onLoad={null}
                 options={Object {}}
-                src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"
+                src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.8/MathJax.js?config=TeX-MML-AM_CHTML"
               >
                 <MathJaxNode
                   inline={true}
@@ -206,7 +210,7 @@ dry layer
                 onError={[Function]}
                 onLoad={null}
                 options={Object {}}
-                src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"
+                src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.8/MathJax.js?config=TeX-MML-AM_CHTML"
               >
                 <MathJaxNode
                   inline={true}
@@ -256,7 +260,7 @@ the wet layer.
               onError={[Function]}
               onLoad={null}
               options={Object {}}
-              src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"
+              src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.8/MathJax.js?config=TeX-MML-AM_CHTML"
             >
               <MathJaxNode
                 inline={false}

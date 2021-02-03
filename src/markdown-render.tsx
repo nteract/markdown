@@ -42,7 +42,7 @@ const MarkdownRender = (props: MarkDownRenderProps) => {
       ...props.renderers,
     },
     plugins: [RemarkMathPlugin],
-    astPlugins: [AttachmentTransformer(props.attachments), props.astPlugins],
+    astPlugins: [AttachmentTransformer(props.attachments), ...props.astPlugins],
   };
   return <ReactMarkdown {...newProps} />;
 };

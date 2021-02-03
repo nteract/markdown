@@ -3,14 +3,11 @@ import { Source } from "@nteract/presentational-components";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 
-import htmlParser = require("react-markdown/plugins/html-parser");
-
 import RemarkMathPlugin from "./remark-math";
 import AttachmentTransformer, {
   Attachments,
 } from "./attachment/attachment-transformer";
 
-const parseHTML = htmlParser();
 interface MarkDownRenderProps extends ReactMarkdown.ReactMarkdownProps {
   attachments?: Attachments;
 }

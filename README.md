@@ -1,3 +1,5 @@
+> **Deprecated:** This package is no longer maintained. Please use [nteract/elements](https://github.com/nteract/elements) instead.
+
 # @nteract/markdown
 
 This package contains components that allow us to render Markdown text per the Commonmark specification. It also supports rendering in-line and block math using the LaTeX syntax.
